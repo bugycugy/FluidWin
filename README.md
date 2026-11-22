@@ -137,7 +137,7 @@ A quick fix release.
 The biggest FluidWin update so far: new features, a lot of what you asked for in the Issues, and the most thorough
 review the code has ever had.
 
-- **Eight languages:** Italian, English, Spanish, French, German, Portuguese, Arabic (read from right to left) and Turkish.
+- **Seven languages:** Italian, English, Spanish, French, German, Portuguese and Arabic (read from right to left).
 - **Dock:** live window previews, app commands (jump lists) in the right-click menu, drag to reorder icons, hide apps,
   show the desktop, and a choice of position (bottom, top, left or right).
 - **Launcher and search:** files and folders from the Windows search index.
