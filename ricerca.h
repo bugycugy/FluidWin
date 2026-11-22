@@ -415,7 +415,7 @@ private:
             std::stable_sort(trovate.begin(), trovate.end(), [](auto& a, auto& b) { return a.first > b.first; });
             for (size_t i = 0; i < trovate.size() && i < 5; i++) {
                 const auto& a = app[trovate[i].second];
-                risultati.push_back({T_APP, a.first, L"App", a.second, a.second});
+                risultati.push_back({T_APP, a.first, testi::t(L"App", L"App"), a.second, a.second});
             }
             int n = 0;
             for (const auto& s : pagine()) {

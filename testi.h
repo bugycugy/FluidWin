@@ -22,7 +22,7 @@
 
 namespace testi {
 
-enum Lingua { ITALIANO = 0, INGLESE = 1, SPAGNOLO = 2, FRANCESE = 3, TEDESCO = 4, PORTOGHESE = 5, ARABO = 6, N_LINGUE = 7 };
+enum Lingua { ITALIANO = 0, INGLESE = 1, SPAGNOLO = 2, FRANCESE = 3, TEDESCO = 4, PORTOGHESE = 5, ARABO = 6, TURCO = 7, N_LINGUE = 8 };
 
 // atomica: la leggono anche i thread di lavoro (aggiornamenti, widget) mentre l'interfaccia la cambia (S12)
 inline std::atomic<int>& lingua() { static std::atomic<int> l{ITALIANO}; return l; }
@@ -33,7 +33,7 @@ inline bool rtl() { return attuale() == ARABO; }
 
 // nome di ogni lingua nella lingua stessa (scelta nelle impostazioni)
 inline const wchar_t* nome(int l) {
-    static const wchar_t* n[N_LINGUE] = {L"Italiano", L"English", L"Español", L"Français", L"Deutsch", L"Português", L"العربية"};
+    static const wchar_t* n[N_LINGUE] = {L"Italiano", L"English", L"Español", L"Français", L"Deutsch", L"Português", L"العربية", L"Türkçe"};
     return l >= 0 && l < N_LINGUE ? n[l] : n[INGLESE];
 }
 
@@ -85,12 +85,12 @@ inline const wchar_t* t(const wchar_t* it, const wchar_t* en) {
 // nome della lingua per date e orari (GetDateFormatEx). Arabo d'Egitto: calendario gregoriano (quello saudita e'
 // l'egiriano, e le date non corrisponderebbero al resto di Windows)
 inline const wchar_t* locale() {
-    static const wchar_t* n[N_LINGUE] = {L"it-IT", L"en-US", L"es-ES", L"fr-FR", L"de-DE", L"pt-BR", L"ar-EG"};
+    static const wchar_t* n[N_LINGUE] = {L"it-IT", L"en-US", L"es-ES", L"fr-FR", L"de-DE", L"pt-BR", L"ar-EG", L"tr-TR"};
     return n[attuale()];
 }
 // codice di due lettere (ricerca delle citta' del meteo)
 inline const wchar_t* codice() {
-    static const wchar_t* n[N_LINGUE] = {L"it", L"en", L"es", L"fr", L"de", L"pt", L"ar"};
+    static const wchar_t* n[N_LINGUE] = {L"it", L"en", L"es", L"fr", L"de", L"pt", L"ar", L"tr"};
     return n[attuale()];
 }
 // separatore dei decimali nei risultati dei calcoli
@@ -105,6 +105,7 @@ inline int predefinita() {
         case LANG_GERMAN: return TEDESCO;
         case LANG_PORTUGUESE: return PORTOGHESE;
         case LANG_ARABIC: return ARABO;
+        case LANG_TURKISH: return TURCO;
         default: return INGLESE;
     }
 }

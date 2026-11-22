@@ -1,3 +1,5 @@
+**English** | [Türkçe](docs/README.tr.md)
+
 # FluidWin
 
 **Windows, redesigned from scratch. By one person, for the love of it.**
@@ -113,7 +115,7 @@ Windows cursors come back. It also works on Windows builds where the Windows set
 ### Settings
 
 Every feature can be turned on or off from the settings, divided into simple sections. You also choose the
-language (seven of them), the shape of the corners, where the dock sits, and one of FluidWin's own wallpapers.
+language (eight of them), the shape of the corners, where the dock sits, and one of FluidWin's own wallpapers.
 
 <p align="center">
   <img src="docs/gif/impostazioni.gif" width="560" alt="The settings window">
@@ -135,7 +137,7 @@ A quick fix release.
 The biggest FluidWin update so far: new features, a lot of what you asked for in the Issues, and the most thorough
 review the code has ever had.
 
-- **Seven languages:** Italian, English, Spanish, French, German, Portuguese and Arabic (read from right to left).
+- **Eight languages:** Italian, English, Spanish, French, German, Portuguese, Arabic (read from right to left) and Turkish.
 - **Dock:** live window previews, app commands (jump lists) in the right-click menu, drag to reorder icons, hide apps,
   show the desktop, and a choice of position (bottom, top, left or right).
 - **Launcher and search:** files and folders from the Windows search index.
@@ -288,7 +290,7 @@ The source code is public, so anyone can inspect how FluidWin works and judge th
 - This is still an **early version**. I tested it carefully on my PC, but not on every PC in the world. If something
   doesn't work, tell me in the [Issues](../../issues). In the settings, **General**, **Diagnostics**, **Copy** gives
   you a short report (with no personal data) to paste there.
-- The interface is in **Italian, English, Spanish, French, German, Portuguese and Arabic** (you can switch in the
+- The interface is in **Italian, English, Spanish, French, German, Portuguese, Arabic and Turkish** (you can switch in the
   settings). Translations other than Italian and English are new: if something reads oddly, tell me.
 - It doesn't ask for administrator rights, doesn't touch Windows files and doesn't inject code into other apps.
 - It only goes online for the weather and the city search ([Open-Meteo](https://open-meteo.com)), the news (the public

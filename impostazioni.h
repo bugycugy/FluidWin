@@ -215,7 +215,7 @@ public:
         if (daCentro && dockSu) dockSu(true);
         if (registro) { char b[140]; snprintf(b, 140, "impostazioni: crescono da%s (%ld,%ld-%ld,%ld -> %d,%d %dx%d)", daCentro ? "l centro di controllo" : dalMouse ? "l mouse" : "l centro dello schermo", rDa.left, rDa.top, rDa.right, rDa.bottom, x, y, w, h); registro(b); }
         // (rifatti se lo schermo ha un'altra scala: prima restavano quelli della prima apertura, S15)
-        if (fTitolo && fDpi != d) for (IDWriteTextFormat** f : {&fTitolo, &fVoce, &fSotto, &fSezione, &fCentro, &fMarchio, &fPiccolo}) if (*f) { (*f)->Release(); *f = nullptr; }
+        if (fTitolo && fDpi != d) for (IDWriteTextFormat** f : {&fTitolo, &fVoce, &fSotto, &fSezione, &fCentro, &fMarchio}) if (*f) { (*f)->Release(); *f = nullptr; }
         if (!fTitolo) {
             fDpi = d;
             fTitolo = v.formato(22 * d, DWRITE_FONT_WEIGHT_SEMI_BOLD);
@@ -224,7 +224,6 @@ public:
             fSezione = v.formato(13 * d, DWRITE_FONT_WEIGHT_MEDIUM);
             fCentro = v.formato(12.5f * d, DWRITE_FONT_WEIGHT_MEDIUM, DWRITE_TEXT_ALIGNMENT_CENTER);
             fMarchio = v.formato(16 * d, DWRITE_FONT_WEIGHT_SEMI_BOLD);
-            fPiccolo = v.formato(10.5f * d, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_TEXT_ALIGNMENT_CENTER);   // ("Coming soon" della lingua)
         }
         valori().avvio = avvioAttivo();   // (puo' essere cambiato da Gestione attivita' mentre FluidWin era aperto)
         DragAcceptFiles(v.fin, TRUE);
@@ -472,7 +471,7 @@ private:
          L"On the desktop and in File Explorer. Off or with Shift: the Windows one", &Valori::menuDestro, S_TASTIERA},
     };
     vetro::Finestra v;
-    IDWriteTextFormat *fTitolo = nullptr, *fVoce = nullptr, *fSotto = nullptr, *fSezione = nullptr, *fCentro = nullptr, *fMarchio = nullptr, *fPiccolo = nullptr;
+    IDWriteTextFormat *fTitolo = nullptr, *fVoce = nullptr, *fSotto = nullptr, *fSezione = nullptr, *fCentro = nullptr, *fMarchio = nullptr;
     float fDpi = 0;   // scala con cui sono stati fatti i formati qui sopra
     bool aperta = false, dentro = false;
     // crescita dal centro di controllo e rientro (vedi apri): morph 1 cresce, -1 rientra, 0 fermo; mx 0..1 avanzamento
@@ -981,15 +980,21 @@ private:
             y += 70 * d;
         }
         if (sezione == S_GENERALE) {
-            // lingua: sette scelte in un'unica tendina di due file da quattro (i nomi restano ciascuno nella sua lingua);
-            // l'ottavo posto dice che altre lingue arriveranno
-            const D2D1_RECT_F rl = {L, y, R, y + 98 * d};
+            // lingua: le scelte in un'unica tendina a file di quattro (i nomi restano ciascuno nella sua lingua). Le file
+            // crescono con le lingue; l'ultima fila e' sempre "Coming soon": dice che altre lingue arriveranno
+            const float h = 34 * d;
+            const int fileLingue = (testi::N_LINGUE + 3) / 4;   // (le lingue, a file di quattro)
+            const int file = fileLingue + 1;                    // (piu' la fila di "Coming soon")
+            const D2D1_RECT_F rl = {L, y, R, y + 30 * d + (float)file * h};
             riquadro(rl, false);
             v.testo(testi::t(L"Lingua", L"Language"), fVoce, {rl.left + 16 * d, rl.top, rl.left + 160 * d, rl.bottom}, inkS);
-            const float x0 = rl.left + 170 * d, larg = rl.right - 16 * d - x0, h = 34 * d, y0 = rl.top + 15 * d;
+            const float x0 = rl.left + 170 * d, larg = rl.right - 16 * d - x0, y0 = rl.top + 15 * d;
             v.pen->SetColor(v.scuro ? D2D1::ColorF(1, 1, 1, 0.08f * (float)e) : D2D1::ColorF(0, 0, 0, 0.06f * (float)e));
-            v.rt->FillRoundedRectangle({{x0, y0, x0 + larg, y0 + 2 * h}, h / 2, h / 2}, v.pen);
-            v.testo(L"Coming soon", fPiccolo, {x0 + larg * 3 / 4 + 3 * d, y0 + h + 3 * d, x0 + larg - 3 * d, y0 + 2 * h - 3 * d}, tenueS);
+            v.rt->FillRoundedRectangle({{x0, y0, x0 + larg, y0 + (float)file * h}, h / 2, h / 2}, v.pen);
+            {   // "Coming soon": una fila sua sotto le lingue, con lo stesso carattere dei nomi ma sbiadito (non si taglia mai)
+                const float yl = y0 + (float)fileLingue * h;
+                v.testo(testi::t(L"Prossimamente", L"Coming soon"), fCentro, {x0 + 3 * d, yl + 3 * d, x0 + larg - 3 * d, yl + h - 3 * d}, tenueS);
+            }
             for (int i = 0; i < testi::N_LINGUE; i++) {
                 const int col = i % 4;
                 const int fila = i / 4;
@@ -1006,7 +1011,7 @@ private:
                 }
                 v.testo(nomeL, fCentro, r, inkS);
             }
-            y += 104 * d;
+            y += 36 * d + (float)file * h;
             {   // angoli (1.3.0, Fase 3): dock, notch, pannelli, menu e finestre di FluidWin; tre scelte
                 const D2D1_RECT_F ra = {L, y, R, y + 64 * d};
                 riquadro(ra, false);

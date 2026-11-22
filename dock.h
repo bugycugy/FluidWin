@@ -1373,7 +1373,7 @@ private:
         const std::wstring chiaveTrascinata = (trascinando && trascinata >= 0 && trascinata < (int)voci.size()) ? identita(voci[trascinata]) : L"";
         std::vector<Voce> nuove;
         // 0) prima icona: il launcher di tutte le app (disegnata dal dock, senza finestre)
-        { Voce l; l.fissata = true; l.avvio = AVVIO_LAUNCHER; l.nome = L"App"; nuove.push_back(std::move(l)); }
+        { Voce l; l.fissata = true; l.avvio = AVVIO_LAUNCHER; l.nome = testi::t(L"App", L"App"); nuove.push_back(std::move(l)); }
         // 1) aggiunte alla barra, nell'ordine dei collegamenti. Leggerle (ogni .lnk aperto dalla shell) costa: si
         // rileggono solo se la cartella e' cambiata (collegamento aggiunto, tolto o rinominato) o dopo un minuto
         wchar_t cart[MAX_PATH];
